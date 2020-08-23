@@ -9,4 +9,4 @@ const knexConfig = require('./knexfile');
 const knex = knexJs(knexConfig);
 const db = bookShelf(knex);
 
-export default db;
+module.exports = db;
