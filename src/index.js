@@ -5,7 +5,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-// require('./config');
+require('./config');
+const logger = require('./utils/logger');
 
 app.set('host', process.env.APP_HOST || 'localhost');
 app.set('port', process.env.APP_PORT || 3001);
@@ -23,9 +24,9 @@ app.get('/', (req, res) => {
 
 app.listen(app.get('port'), app.get('host'), (err) => {
   if (err) {
-    console.error('Unable to start server', err.trace);
+    logger.error('Unable to start server' + err.trace);
   } else {
-    console.log(`Server running on http://${app.get('host')}:${app.get('port')}`);
+    logger.info(`Server running on http://${app.get('host')}:${app.get('port')}`);
   }
 });
 
