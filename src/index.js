@@ -5,8 +5,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-
-
 // require('./config');
 
 app.set('host', process.env.APP_HOST || 'localhost');
@@ -19,11 +17,9 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.get('/', (req, res) => {
   res.json({ success: true, msg: 'Hello API' });
 });
-
 
 app.listen(app.get('port'), app.get('host'), (err) => {
   if (err) {
