@@ -21,17 +21,32 @@ const Project = model.extend({
    *
    * @param projectId
    */
-  getAllUsers: (projectId) => {
+  getAllUsers(projectId) {
     return Project.getRelated('users', { id: projectId });
   },
 
+  /**
+   * Project can have multiple tasks.
+   */
   tasks() {
     return this.hasMany('Task', 'project_id');
+  },
+  /**
+   * Get all the tasks associated with Project.
+   *
+   * @param {Integer} projectId
+   */
+  getAllTasks(projectId) {
+    return Project.getRelated('tasks', { id: projectId });
   }
 });
 
 // Project.forge()
 //   .getAllUsers(1)
+//   .then((data) => console.log(data));
+
+// Project.forge()
+//   .getAllTasks(2)
 //   .then((data) => console.log(data));
 
 module.exports = db.model('Project', Project);

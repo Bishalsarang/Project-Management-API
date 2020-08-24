@@ -67,7 +67,7 @@ const model = db.Model.extend(
       });
     },
 
-    getRelated: function (relatedTableName, filter, options) {
+    getRelated: function (relatedTableName, filter = {}, options = {}) {
       return new Promise((resolve, reject) => {
         this.where(filter)
           .fetch({ ...options, withRelated: [relatedTableName], debug: process.env.DEBUG_BOOK_SHELF })

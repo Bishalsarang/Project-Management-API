@@ -17,6 +17,11 @@
 
   - User has many projects and Project has many user => Many to Many
   - Project can have multiple task and Task belongs to a project => One to many
+  - User can have multiple task and task can be tagged to multiple users => Many to Many
+
+## Reminder
+
+- Update schema for members by adding is_manager field and for tags by adding is_assigned field
 
 ## TODOS
 

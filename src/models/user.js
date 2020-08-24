@@ -18,19 +18,31 @@ const User = model.extend({
   /**
    * Get all the projects associated with userId.
    *
-   * @param userId
+   * @param {Integer} userId
    */
-  getAllProjects: (userId) => {
+  getAllProjects(userId) {
     return User.getRelated('projects', { id: userId });
   },
 
+  /**
+   * User may belong to multiple tasks.
+   */
   tasks() {
-    return this.hasMany('Task', 'assignee_id');
+    return this.belongsToMany('Task', 'tags', 'user_id', 'task_id');
+  },
+
+  /**
+   * Get all the tasks tagged and assigned with userId.
+   *
+   * @param {Integer} userId
+   */
+  getAllTasks(userId) {
+    return User.getRelated('tasks', { id: userId });
   }
 });
 
-User.forge()
-  .getAllProjects(7)
-  .then((data) => console.log(data));
+// User.forge()
+//   .getAllTasks(1)
+//   .then((data) => console.log(data));
 
 module.exports = db.model('User', User);
