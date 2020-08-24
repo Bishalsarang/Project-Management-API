@@ -1,56 +1,71 @@
 const db = require('../db');
 
 /**
- *  This is our extended model which add CRUD operations in our model.
+ *  This is our extended model which add common CRUD operations in every  model.
  */
 const model = db.Model.extend(
   {},
   {
     /**
-     * Returns all the rows based on the condition.
+     * Returns all the rows based on the filter.
      *
      * @param {Object} filter
-     * @param {*} options
+     * @param {Object} options
      */
     findAll: function (filter = {}, options = {}) {
       return new Promise((resolve, reject) => {
         this.where(filter)
-          .fetchAll(options)
-          .then((rows) => {
-            resolve(rows.toJSON());
-          })
+          .fetchAll({ ...options, debug: process.env.DEBUG_BOOK_SHELF })
+          .then((rows) => resolve(rows.toJSON()))
           .catch((err) => reject(err));
       });
     },
 
+    /**
+     * Returns a row matching the filter.
+     *
+     * @param {Object} filter
+     * @param {Object} options
+     */
     findOne: function (filter = {}, options = {}) {
       return new Promise((resolve, reject) => {
         this.where(filter)
-          .fetch(options)
-          .then((row) => {
-            resolve(row.toJSON());
-          })
+          .fetch({ ...options, debug: process.env.DEBUG_BOOK_SHELF })
+          .then((row) => resolve(row.toJSON()))
           .catch((err) => reject(err));
       });
     },
 
+    /**
+     * Insert row.
+     *
+     * @param {Object} data
+     * @param {Object} options
+     */
     create: function (data, options) {
       return new Promise((resolve, reject) => {
         this.forge(data)
-          .save(null, options)
-          .then((rows) => {
-            resolve(rows.toJSON());
-          })
-          .catch((err) => {
-            console.error(err);
-            reject(err);
-          });
+          .save(null, { ...options, method: 'insert', debug: process.env.DEBUG_BOOK_SHELF })
+          .then((rows) => resolve(rows.toJSON()))
+          .catch((err) => reject(err));
+      });
+    },
+
+    /**
+     * Update.
+     *
+     * @param {Object} filter
+     * @param {Object} data
+     * @param {Pbject} options
+     */
+    update: function (filter = {}, data = {}, options) {
+      return new Promise((resolve, reject) => {
+        this.where(filter)
+          .save(data, { ...options, method: 'update', patch: 'true', debug: process.env.DEBUG_BOOK_SHELF })
+          .then((rows) => resolve(rows.toJSON()))
+          .catch((err) => reject(err));
       });
     }
-
-    //  update: function (filter, data, options) {},
-
-    //  destroy: function (filter, options) {}
   }
 );
 
