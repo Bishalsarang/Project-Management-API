@@ -4,6 +4,8 @@ const db = require('../db');
 const { tableName } = require('../constants');
 
 require('./user');
+require('./project');
+require('./comment');
 
 const Task = model.extend({
   tableName: tableName.tasks,
@@ -37,11 +39,27 @@ const Task = model.extend({
    */
   getProject(taskId) {
     return Task.getRelated('projects', { id: taskId });
+  },
+
+  /**
+   * Task can have many comments.
+   */
+  comments() {
+    return this.hasMany('Comment', 'task_id');
+  },
+
+  /**
+   * Get all the comments fot task with taskId.
+   *
+   * @param {Integer} taskId
+   */
+  getAllComments(taskId) {
+    return Task.getRelated('comments', { id: taskId });
   }
 });
 
 // Task.forge()
-//   .getProject(3)
+//   .getAllComments(2)
 //   .then((data) => console.log(data));
 
 module.exports = db.model('Task', Task);

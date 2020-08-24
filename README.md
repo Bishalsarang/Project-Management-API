@@ -18,10 +18,12 @@
   - User has many projects and Project has many user => Many to Many
   - Project can have multiple task and Task belongs to a project => One to many
   - User can have multiple task and task can be tagged to multiple users => Many to Many
+  - Task has multiple comments and comment belong to a task => One to Many
 
 ## Reminder
 
 - Update schema for members by adding is_manager field and for tags by adding is_assigned field
+- Update schema for user by adding is_deleted column
 
 ## TODOS
 
@@ -30,4 +32,5 @@
 - [x] User registration allowed only by admin user
 - [x] User login for admin and non admin user
 - [x] Complete auth routes
+- [x] Add relationships between table
 - [ ] Sanitize and validate data before inserting into database
