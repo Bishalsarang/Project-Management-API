@@ -1,18 +1,23 @@
 const { tableName } = require('../constants');
+const logger = require('../utils/logger');
 
 const MAX_TITlE_LENGTH = 50;
 
 exports.up = async function (knex) {
   // Create Users Table
-  await knex.schema.createTable(tableName.users, (table) => {
-    table.increments().primary();
-    table.text('firstname').notNullable();
-    table.text('lastname').notNullable();
-    table.text('username').notNullable().unique();
-    table.text('password').notNullable();
-    table.timestamp('created_at').defaultTo(knex.fn.now());
-    table.enu('role', ['admin', 'project_manager', 'engineer', 'team_leader']);
-  });
+  try {
+    await knex.schema.createTable(tableName.users, (table) => {
+      table.increments().primary();
+      table.text('firstname').notNullable();
+      table.text('lastname').notNullable();
+      table.text('username').notNullable().unique();
+      table.text('password').notNullable();
+      table.timestamp('created_at').defaultTo(knex.fn.now());
+      table.enu('role', ['admin', 'project_manager', 'engineer', 'team_leader']);
+    });
+  } catch (err) {
+    logger.error('Unable to create users table', err);
+  }
 
   //   Create Project table
   await knex.schema.createTable(tableName.projects, (table) => {

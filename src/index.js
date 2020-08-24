@@ -23,8 +23,6 @@ app.get('/', (req, res) => {
   res.json({ success: true, msg: 'Hello API' });
 });
 
-models.User.fetchAll().then((row) => logger.info(row.toJSON()));
-// .catch((err) => console.error(err));
 app.listen(app.get('port'), app.get('host'), (err) => {
   if (err) {
     logger.error('Unable to start server' + err.trace);

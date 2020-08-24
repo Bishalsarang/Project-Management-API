@@ -14,7 +14,6 @@ exports.seed = async function (knex) {
   // Store hash of default password
   const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, parseInt(process.env.SALT_ROUNDS));
 
-  // Create default user credentials
   const user = {
     firstname: process.env.ADMIN_FIRST_NAME || 'admin',
     lastname: process.env.ADMIN_LAST_NAME || 'admin',
@@ -22,6 +21,6 @@ exports.seed = async function (knex) {
     password: hashedPassword || 'admin',
     role: 'admin'
   };
-
+  // Create default user credentials
   const [createdUser] = await knex(tableName.users).insert(user).returning('*');
 };
