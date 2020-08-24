@@ -9,4 +9,5 @@ const knexConfig = require('./knexfile');
 const knex = knexJs(knexConfig);
 const db = bookShelf(knex);
 
+db.plugin('registry');
 module.exports = db;

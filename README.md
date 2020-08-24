@@ -13,6 +13,11 @@
 - Run the server
   `yarn start`
 
+  # Schema
+
+  - User has many projects and Project has many user => Many to Many
+  - Project can have multiple task and Task belongs to a project => One to many
+
 ## TODOS
 
 - [x] Create database schema
