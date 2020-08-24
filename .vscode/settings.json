@@ -13,8 +13,10 @@
       }
    ],
    "cSpell.words": [
+      "datetime",
       "firstname",
       "knexfile",
-      "lastname"
+      "lastname",
+      "middlewares"
    ]
 }

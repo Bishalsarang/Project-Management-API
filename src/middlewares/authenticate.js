@@ -2,26 +2,31 @@ const httpStatusCodes = require('http-status-codes');
 
 const { verifyToken } = require('../utils/auth.utils');
 
-const isAdmin = async (req, res, next) => {
+const isAuthenticated = async (req, res, next) => {
   const token =
     req.headers['auth-token'] || req.headers['authorization'] || req.headers['token'] || req.headers['x-access-token'];
 
   try {
     if (token) {
-      const payload = await verifyToken(token);
+      const isValidToken = await verifyToken(token);
 
-      if (!payload || payload.role !== 'admin') {
-        const err = new Error('Not authorized. Only admin is allowed to do this operation');
+      if (!isValidToken) {
+        const err = new Error('Not authenticated. Try to login again ');
 
         err.statusCode = httpStatusCodes.UNAUTHORIZED;
         throw err;
       }
 
       next();
+    } else {
+      const err = new Error('Not authenticated. Try to login again ');
+
+      err.statusCode = httpStatusCodes.UNAUTHORIZED;
+      throw err;
     }
   } catch (err) {
     next(err);
   }
 };
 
-module.exports = { isAdmin };
+module.exports = { isAuthenticated };

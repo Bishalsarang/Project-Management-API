@@ -55,7 +55,7 @@ exports.up = async function (knex) {
     table.foreign('project_id').references('id').inTable(tableName.projects).onDelete('cascade');
   });
 
-  //   Create commments table
+  //   Create comments table
   await knex.schema.createTable(tableName.comments, (table) => {
     table.increments().primary();
 
