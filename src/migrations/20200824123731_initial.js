@@ -6,9 +6,9 @@ exports.up = async function (knex) {
   // Create Users Table
   await knex.schema.createTable(tableName.users, (table) => {
     table.increments().primary();
-    table.text('first_name').notNullable();
-    table.text('last_name').notNullable();
-    table.text('user_name').notNullable().unique();
+    table.text('firstname').notNullable();
+    table.text('lastname').notNullable();
+    table.text('username').notNullable().unique();
     table.text('password').notNullable();
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.enu('role', ['admin', 'project_manager', 'engineer', 'team_leader']);

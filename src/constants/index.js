@@ -7,4 +7,13 @@ const tableName = {
   tasks: 'tasks'
 };
 
-module.exports = { tableName };
+const orderedTableNames = [
+  tableName.tags,
+  tableName.comments,
+  tableName.tasks,
+  tableName.members,
+  tableName.projects,
+  tableName.users
+];
+
+module.exports = { tableName, orderedTableNames };
