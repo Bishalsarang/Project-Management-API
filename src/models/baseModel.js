@@ -31,12 +31,16 @@ const model = db.Model.extend(
 
     create: function (data, options) {
       return new Promise((resolve, reject) => {
+        //   console.log(data);
         this.forge(data)
           .save(null, options)
           .then((rows) => {
             resolve(rows.toJSON());
           })
-          .catch((err) => reject(err));
+          .catch((err) => {
+            console.log('jsjsj');
+            reject(err);
+          });
       });
     },
 

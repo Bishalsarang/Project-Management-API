@@ -11,5 +11,10 @@
          "server": "localhost",
          "username": "admin"
       }
+   ],
+   "cSpell.words": [
+      "firstname",
+      "knexfile",
+      "lastname"
    ]
 }

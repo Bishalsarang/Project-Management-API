@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 require('./config');
+const routes = require('./routes');
 const logger = require('./utils/logger');
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/api', routes);
 app.get('/', (req, res) => {
   res.json({ success: true, msg: 'Hello API' });
 });
