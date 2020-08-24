@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 
 require('./config');
 const logger = require('./utils/logger');
-const models = require('./models');
+const errorHandler = require('./middlewares/errorHandler');
 
 app.set('host', process.env.APP_HOST || 'localhost');
 app.set('port', process.env.APP_PORT || 3001);
@@ -22,6 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.json({ success: true, msg: 'Hello API' });
 });
+
+app.use(errorHandler.genericErrorHandler);
+app.use(errorHandler.notFound);
 
 app.listen(app.get('port'), app.get('host'), (err) => {
   if (err) {
