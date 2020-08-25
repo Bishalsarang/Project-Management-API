@@ -3,6 +3,7 @@ const db = require('../db');
 const { tableName } = require('../constants');
 
 require('./task');
+require('./member');
 require('./project');
 
 const User = model.extend({
@@ -39,7 +40,21 @@ const User = model.extend({
   getAllTasks(userId) {
     return User.getRelated('tasks', { id: userId });
   },
+  /**
+   * The user can be member of multiple.
+   */
+  members() {
+    return this.hasMany('Member');
+  },
 
+  /**
+   * Get all the project_ids the user is manager.
+   *
+   * @param {Integer} userId
+   */
+  getAllMembers(userId) {
+    return User.getRelated(tableName.members, { id: userId });
+  },
   /**
    * Softdelete user.
    *
@@ -51,7 +66,7 @@ const User = model.extend({
 });
 
 // User.forge()
-//   .getAllTasks(1)
+//   .getAllMembers(3)
 //   .then((data) => console.log(data));
 
 module.exports = db.model('User', User);

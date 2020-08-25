@@ -16,6 +16,7 @@
   # Schema
 
   - User has many projects and Project has many user => Many to Many
+  - User can be member of multiple Project and every member is a user => One to many
   - Project can have multiple task and Task belongs to a project => One to many
   - User can have multiple task and task can be tagged to multiple users => Many to Many
   - Task has multiple comments and comment belong to a task => One to Many
@@ -58,6 +59,7 @@
 - [x] Add relationships between table
 - [x] Complete user routes (CRUD)
 - [x] Complete project routes (CRUD)
+- [ ] List User by roles
 - [ ] Remove code duplication in CRUD
 - [ ] Sanitize and validate data before inserting into database
 - [ ] Write Database test

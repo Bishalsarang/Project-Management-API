@@ -15,6 +15,6 @@ router.use('/auth', authRoutes);
 router.use('/comments', isAuthenticated, commentRoutes);
 router.use('/users', isAuthenticated, authorize.isAuthorized([ROLE.admin]), userRoutes);
 router.use('/tasks', isAuthenticated, authorize.isAuthorized([ROLE.admin]), taskRoutes);
-router.use('/projects', isAuthenticated, authorize.isAuthorized([ROLE.admin]), projectRoutes);
+router.use('/projects', isAuthenticated, projectRoutes);
 
 module.exports = router;
