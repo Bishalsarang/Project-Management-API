@@ -22,7 +22,6 @@ const updateUsers = async (filter, updateData) => {
 };
 
 const deleteUsers = async (userId) => {
-  console.log(userId);
   try {
     //   Here softdelete is a method specific to User rather than baseModel so we need to create an instance using forge
     const { password, ...rest } = await User.forge().softDelete(userId);

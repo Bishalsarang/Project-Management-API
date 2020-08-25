@@ -56,7 +56,7 @@ const model = db.Model.extend(
      *
      * @param {Object} filter
      * @param {Object} data
-     * @param {Pbject} options
+     * @param {Object} options
      */
     update: function (filter = {}, data = {}, options) {
       return new Promise((resolve, reject) => {

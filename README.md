@@ -48,7 +48,7 @@
 - Update schema for members by adding is_manager field and for tags by adding is_assigned field
 - Update schema for user by adding is_deleted column
 
-## TODOS
+## TO DOS
 
 - [x] Create database schema
 - [x] Data migration and seeding
@@ -56,6 +56,8 @@
 - [x] User login for admin and non admin user
 - [x] Complete auth routes
 - [x] Add relationships between table
+- [x] Complete user routes (CRUD)
+- [x] Complete project routes (CRUD)
 - [ ] Remove code duplication in CRUD
 - [ ] Sanitize and validate data before inserting into database
 - [ ] Write Database test

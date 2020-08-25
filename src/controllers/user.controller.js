@@ -1,7 +1,4 @@
-const httpStatusCodes = require('http-status-codes');
-
-const { getCurrentUserRole, isAuthorizedRole } = require('../utils/auth.utils');
-const { ROLE, SUCCESS_MESSAGE } = require('../constants');
+const { SUCCESS_MESSAGE } = require('../constants');
 const { getUsers, updateUsers, deleteUsers } = require('../services/user.services');
 
 const readAll = async (req, res, next) => {

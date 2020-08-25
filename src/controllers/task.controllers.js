@@ -1,10 +1,9 @@
-const { createProjects, getProjects, updateProjects, deleteProjects } = require('../services/project.services');
-
+const { createTasks, getTasks, updateTasks, deleteTasks } = require('../services/task.services');
 const { SUCCESS_MESSAGE } = require('../constants');
 
 const create = async (req, res, next) => {
   try {
-    const result = await createProjects(req.body);
+    const result = await createTasks(req.body);
 
     if (result instanceof Error) {
       throw new Error(result);
@@ -17,7 +16,7 @@ const create = async (req, res, next) => {
 
 const readAll = async (req, res, next) => {
   try {
-    const result = await getProjects();
+    const result = await getTasks();
 
     if (result instanceof Error) {
       throw new Error(result);
@@ -30,7 +29,7 @@ const readAll = async (req, res, next) => {
 
 const readById = async (req, res, next) => {
   try {
-    const result = await getProjects({ id: req.params.id });
+    const result = await getTasks({ id: req.params.id });
 
     if (result instanceof Error) {
       throw new Error(result);
@@ -43,7 +42,7 @@ const readById = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const result = await updateProjects({ id: req.params.id }, req.body);
+    const result = await updateTasks({ id: req.params.id }, req.body);
 
     if (result instanceof Error) {
       throw new Error(result);
@@ -56,7 +55,7 @@ const update = async (req, res, next) => {
 
 const del = async (req, res, next) => {
   try {
-    const result = await deleteProjects(req.params.id);
+    const result = await deleteTasks(req.params.id);
 
     if (result instanceof Error) {
       throw new Error(result);
@@ -67,4 +66,4 @@ const del = async (req, res, next) => {
   }
 };
 
-module.exports = { create, readAll, readById, update, del };
+module.exports = { readAll, create, readById, update, del };

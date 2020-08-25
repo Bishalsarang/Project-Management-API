@@ -12,9 +12,11 @@ const isAuthorized = (allowedRoles = []) => {
       const err = new Error('Unauthorized Access You must be ' + allowedRoles);
 
       err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      next(err);
+
+      return next(err);
     }
-    next();
+
+    return next();
   };
 };
 

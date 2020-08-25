@@ -46,8 +46,6 @@ const User = model.extend({
    * @param {Integer} userId
    */
   softDelete(userId) {
-    console.log(userId);
-
     return User.update({ id: userId }, { is_deleted: true });
   }
 });
