@@ -67,6 +67,15 @@ const model = db.Model.extend(
       });
     },
 
+    destroy: function (filter = {}, options) {
+      return new Promise((resolve, reject) => {
+        this.where(filter)
+          .destroy(options)
+          .then((rows) => resolve(rows.toJSON()))
+          .catch((err) => reject(err));
+      });
+    },
+
     getRelated: function (relatedTableName, filter = {}, options = {}) {
       return new Promise((resolve, reject) => {
         this.where(filter)

@@ -23,4 +23,11 @@ const ROLE = {
   teamLeader: 'team_leader'
 };
 
-module.exports = { tableName, orderedTableNames, ROLE };
+const SUCCESS_MESSAGE = {
+  read: 'Successfully read',
+  write: 'Successfully written',
+  delete: 'Successfully deleted',
+  update: 'Successfully updated'
+};
+
+module.exports = { tableName, orderedTableNames, ROLE, SUCCESS_MESSAGE };
