@@ -38,6 +38,17 @@ const User = model.extend({
    */
   getAllTasks(userId) {
     return User.getRelated('tasks', { id: userId });
+  },
+
+  /**
+   * Softdelete user.
+   *
+   * @param {Integer} userId
+   */
+  softDelete(userId) {
+    console.log(userId);
+
+    return User.update({ id: userId }, { is_deleted: true });
   }
 });
 

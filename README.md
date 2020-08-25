@@ -22,8 +22,13 @@
 
 ## Routes
 
-[x] POST /auth/login
-[X] POST /auth/register | This route needs the role to be 'admin'
+[x] POST api/auth/login
+[X] POST api/auth/register | This route needs the role to be 'admin'
+[X] GET api/users | This route needs the role to be 'admin'
+[X] GET api/users:id | This route needs the role to be 'admin'
+[X] PUT api/users:id | This route needs the role to be 'admin'
+[X] DELETE api/users:id | This route needs the role to be 'admin'
+[X] UPDATE api/users:id | This route needs the role to be 'admin'
 
 ## Reminder
 
@@ -41,5 +46,7 @@
 - [ ] Sanitize and validate data before inserting into database
 - [ ] Write Database test
 - [ ] Write API test
+- [ ] Write Integration Test
 - [ ] Add JSdoc
 - [ ] Build Frontend
+- [ ] Arrange imports

@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 const generateAccessToken = (payload) => jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '15d' });
 
 /**
- * Verify if token is valid.
+ * Returns payload if token is valid.
  *
  * @param {String} token
  * @param {String} SECRET

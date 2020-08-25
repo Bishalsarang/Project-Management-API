@@ -16,4 +16,11 @@ const orderedTableNames = [
   tableName.users
 ];
 
-module.exports = { tableName, orderedTableNames };
+const ROLE = {
+  admin: 'admin',
+  projectManager: 'project_manager',
+  engineer: 'engineer',
+  teamLeader: 'team_leader'
+};
+
+module.exports = { tableName, orderedTableNames, ROLE };
