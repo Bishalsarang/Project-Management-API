@@ -10,4 +10,5 @@ router
   .put(userController.update) // UPDATE
   .delete(userController.del) // DELETE
   .all(errorHandler.methodNotAllowed);
+
 module.exports = router;

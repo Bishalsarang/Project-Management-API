@@ -1,88 +1,56 @@
 const httpStatusCodes = require('http-status-codes');
 
 const { getCurrentUserRole, isAuthorizedRole } = require('../utils/auth.utils');
-const { ROLE } = require('../constants');
+const { ROLE, SUCCESS_MESSAGE } = require('../constants');
 const { getUsers, updateUsers, deleteUsers } = require('../services/user.services');
 
 const readAll = async (req, res, next) => {
-  const role = await getCurrentUserRole(req);
-
   try {
-    if (!role) {
-      throw new Error('Error while getting users');
+    const result = await getUsers();
+
+    if (result instanceof Error) {
+      throw new Error(result);
     }
-
-    if (!isAuthorizedRole(role, ROLE.admin)) {
-      const err = new Error('Unauthorized access');
-
-      err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      throw err;
-    }
-
-    res.json({ success: true, data: await getUsers() });
+    res.json({ success: true, message: SUCCESS_MESSAGE.read, data: result });
   } catch (err) {
     next(err);
   }
 };
 
 const readById = async (req, res, next) => {
-  const role = await getCurrentUserRole(req);
-
   try {
-    if (!role) {
-      throw new Error('Error while getting users');
+    const result = await getUsers({ id: req.params.id });
+
+    if (result instanceof Error) {
+      throw new Error(result);
     }
-
-    if (!isAuthorizedRole(role, ROLE.admin)) {
-      const err = new Error('Unauthorized access');
-
-      err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      throw err;
-    }
-
-    res.json({ success: true, data: await getUsers({ id: req.params.id }) });
+    res.json({ success: true, message: SUCCESS_MESSAGE.read, data: result });
   } catch (err) {
     next(err);
   }
 };
 
 const update = async (req, res, next) => {
-  const role = await getCurrentUserRole(req);
-
   try {
-    if (!role) {
-      throw new Error('Error while getting users');
+    const result = await updateUsers({ id: req.params.id }, req.body);
+
+    if (result instanceof Error) {
+      throw new Error(result);
     }
-
-    if (!isAuthorizedRole(role, ROLE.admin)) {
-      const err = new Error('Unauthorized access');
-
-      err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      throw err;
-    }
-
-    res.json({ success: true, data: await updateUsers({ id: req.params.id }, req.body) });
+    res.json({ success: true, message: SUCCESS_MESSAGE.update, data: result });
   } catch (err) {
     next(err);
   }
 };
 
 const del = async (req, res, next) => {
-  const role = await getCurrentUserRole(req);
-
   try {
-    if (!role) {
-      throw new Error('Error while getting users');
+    const result = await deleteUsers(req.params.id);
+
+    if (result instanceof Error) {
+      throw new Error(result);
     }
-
-    if (!isAuthorizedRole(role, ROLE.admin)) {
-      const err = new Error('Unauthorized access');
-
-      err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      throw err;
-    }
-
-    res.json({ success: true, data: await deleteUsers(req.params.id) });
+    res.json({ success: true, message: SUCCESS_MESSAGE.delete, data: result });
   } catch (err) {
     next(err);
   }

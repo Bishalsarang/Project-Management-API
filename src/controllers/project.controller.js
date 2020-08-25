@@ -1,24 +1,9 @@
-const httpStatusCodes = require('http-status-codes');
-
-const { getCurrentUserRole, isAuthorizedRole } = require('../utils/auth.utils');
 const { createProjects, getProjects, updateProjects, deleteProjects } = require('../services/project.services');
 
 const { ROLE, SUCCESS_MESSAGE } = require('../constants');
 
 const create = async (req, res, next) => {
-  const role = await getCurrentUserRole(req);
-
   try {
-    if (!role) {
-      throw new Error('Error while getting users');
-    }
-
-    if (!isAuthorizedRole(role, ROLE.admin)) {
-      const err = new Error('Unauthorized access');
-
-      err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      throw err;
-    }
     const result = await createProjects(req.body);
 
     if (result instanceof Error) {
@@ -31,19 +16,7 @@ const create = async (req, res, next) => {
 };
 
 const readAll = async (req, res, next) => {
-  const role = await getCurrentUserRole(req);
-
   try {
-    if (!role) {
-      throw new Error('Error while getting users');
-    }
-
-    if (!isAuthorizedRole(role, ROLE.admin)) {
-      const err = new Error('Unauthorized access');
-
-      err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      throw err;
-    }
     const result = await getProjects();
 
     if (result instanceof Error) {
@@ -56,19 +29,7 @@ const readAll = async (req, res, next) => {
 };
 
 const readById = async (req, res, next) => {
-  const role = await getCurrentUserRole(req);
-
   try {
-    if (!role) {
-      throw new Error('Error while getting users');
-    }
-
-    if (!isAuthorizedRole(role, ROLE.admin)) {
-      const err = new Error('Unauthorized access');
-
-      err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      throw err;
-    }
     const result = await getProjects({ id: req.params.id });
 
     if (result instanceof Error) {
@@ -81,19 +42,7 @@ const readById = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  const role = await getCurrentUserRole(req);
-
   try {
-    if (!role) {
-      throw new Error('Error while getting users');
-    }
-
-    if (!isAuthorizedRole(role, ROLE.admin)) {
-      const err = new Error('Unauthorized access');
-
-      err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      throw err;
-    }
     const result = await updateProjects({ id: req.params.id }, req.body);
 
     if (result instanceof Error) {
@@ -106,19 +55,7 @@ const update = async (req, res, next) => {
 };
 
 const del = async (req, res, next) => {
-  const role = await getCurrentUserRole(req);
-
   try {
-    if (!role) {
-      throw new Error('Error while getting users');
-    }
-
-    if (!isAuthorizedRole(role, ROLE.admin)) {
-      const err = new Error('Unauthorized access');
-
-      err.statusCode = httpStatusCodes.UNAUTHORIZED;
-      throw err;
-    }
     const result = await deleteProjects(req.params.id);
 
     if (result instanceof Error) {

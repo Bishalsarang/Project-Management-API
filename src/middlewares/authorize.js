@@ -1,34 +1,21 @@
 const httpStatusCodes = require('http-status-codes');
+const { getCurrentUserRole } = require('../utils/auth.utils');
 
-const { ROLE } = require('../constants');
-const { verifyToken, isAuthorizedRole, getToken } = require('../utils/auth.utils');
+/**
+ * Check if user is authorized.
+ *
+ * @param {List} allowedRoles List of String of allowed roles.
+ */
+const isAuthorized = (allowedRoles = []) => {
+  return async (req, res, next) => {
+    if (allowedRoles.length && !allowedRoles.includes(await getCurrentUserRole(req))) {
+      const err = new Error('Unauthorized Access You must be ' + allowedRoles);
 
-const isAdmin = async (req, res, next) => {
-  const token = getToken(req);
-
-  try {
-    if (token) {
-      const payload = await verifyToken(token);
-
-      if (!payload) {
-        const err = new Error('Invalid Token');
-
-        err.statusCode = httpStatusCodes.UNAUTHORIZED;
-        throw err;
-      }
-
-      if (!isAuthorizedRole(payload.role, ROLE.admin)) {
-        const err = new Error('Unauthorized Access');
-
-        err.statusCode = httpStatusCodes.UNAUTHORIZED;
-        throw err;
-      }
-
-      next();
+      err.statusCode = httpStatusCodes.UNAUTHORIZED;
+      next(err);
     }
-  } catch (err) {
-    next(err);
-  }
+    next();
+  };
 };
 
-module.exports = { isAdmin };
+module.exports = { isAuthorized };

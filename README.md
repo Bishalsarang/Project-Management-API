@@ -22,13 +22,26 @@
 
 ## Routes
 
+### Login and register routes
+
 [x] POST api/auth/login
 [X] POST api/auth/register | This route needs the role to be 'admin'
+
+### Users Routes
+
 [X] GET api/users | This route needs the role to be 'admin'
-[X] GET api/users:id | This route needs the role to be 'admin'
-[X] PUT api/users:id | This route needs the role to be 'admin'
-[X] DELETE api/users:id | This route needs the role to be 'admin'
+[X] GET api/users/:id | This route needs the role to be 'admin'
+[X] PUT api/users/:id | This route needs the role to be 'admin'
+[X] DELETE api/users.:id | This route needs the role to be 'admin'
 [X] UPDATE api/users:id | This route needs the role to be 'admin'
+
+### Projects Routes
+
+[X] POST api/projects | This route needs the role to be 'admin'
+[X] GET api/projects | This route needs the role to be 'admin'
+[X] GET api/projects/:id | This route needs the role to be 'admin'
+[X] UPDATE api/projects/:id | This route needs the role to be 'admin'
+[X] DELETE api/projects/:id | This route needs the role to be 'admin'
 
 ## Reminder
 
@@ -43,6 +56,7 @@
 - [x] User login for admin and non admin user
 - [x] Complete auth routes
 - [x] Add relationships between table
+- [ ] Remove code duplication in CRUD
 - [ ] Sanitize and validate data before inserting into database
 - [ ] Write Database test
 - [ ] Write API test
