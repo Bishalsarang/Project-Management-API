@@ -1,7 +1,9 @@
 const model = require('./baseModel');
+
 const db = require('../db');
 const { tableName } = require('../constants');
 
+require('./tag');
 require('./task');
 require('./member');
 require('./project');
@@ -54,6 +56,20 @@ const User = model.extend({
    */
   getAllMembers(userId) {
     return User.getRelated(tableName.members, { id: userId });
+  },
+  /**
+   * User can be tagged in multiple.
+   */
+  tags() {
+    return this.hasMany('Tag');
+  },
+  /**
+   * Get all the tags including taskid based on userId.
+   *
+   * @param {Integer} userId
+   */
+  getAllTags(userId) {
+    return User.getRelated(tableName.tags, { id: userId });
   },
   /**
    * Softdelete user.

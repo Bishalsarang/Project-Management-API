@@ -3,6 +3,7 @@ const db = require('../db');
 
 const { tableName } = require('../constants');
 
+require('./tag');
 require('./user');
 require('./project');
 require('./comment');
@@ -56,6 +57,22 @@ const Task = model.extend({
    */
   getAllComments(taskId) {
     return Task.getRelated('comments', { id: taskId });
+  },
+
+  /**
+   * A task has multiple tags.
+   */
+  tags() {
+    return this.hasMany('Tag', 'task_id');
+  },
+
+  /**
+   * Get all the tags associated with taskId.
+   *
+   * @param {Integer} taskId
+   */
+  getAllTags(taskId) {
+    return Task.getRelated(tableName.tags, { id: taskId });
   }
 });
 

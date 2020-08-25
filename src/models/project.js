@@ -1,10 +1,11 @@
 const model = require('./baseModel');
-const db = require('../db');
 
+const db = require('../db');
 const { tableName } = require('../constants');
 
 require('./user');
 require('./task');
+require('./member');
 
 const Project = model.extend({
   tableName: tableName.projects,
@@ -31,6 +32,7 @@ const Project = model.extend({
   tasks() {
     return this.hasMany('Task', 'project_id');
   },
+
   /**
    * Get all the tasks associated with Project.
    *
@@ -38,6 +40,20 @@ const Project = model.extend({
    */
   getAllTasks(projectId) {
     return Project.getRelated('tasks', { id: projectId });
+  },
+  /**
+   *
+   */
+  members() {
+    return this.hasMany('Member', 'project_id');
+  },
+  /**
+   * Get all members associted with projectId.
+   *
+   * @param {Integer} projectId
+   */
+  getAllMembers(projectId) {
+    return Project.getRelated(tableName.members, { id: projectId });
   }
 });
 

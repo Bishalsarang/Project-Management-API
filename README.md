@@ -17,6 +17,9 @@
 
   - User has many projects and Project has many user => Many to Many
   - User can be member of multiple Project and every member is a user => One to many
+  - Project can have multiple members and each member belongs to a project => One to many
+  - User can be tagged multiple and every tagged user belongs to User => One to many
+  - Task can have multiple tags and every tag belongs to task => One to many
   - Project can have multiple task and Task belongs to a project => One to many
   - User can have multiple task and task can be tagged to multiple users => Many to Many
   - Task has multiple comments and comment belong to a task => One to Many
