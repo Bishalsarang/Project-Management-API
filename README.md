@@ -34,3 +34,7 @@
 - [x] Complete auth routes
 - [x] Add relationships between table
 - [ ] Sanitize and validate data before inserting into database
+- [ ] Write Database test
+- [ ] Write API test
+- [ ] Add JSdoc
+- [ ] Build Frontend

@@ -9,11 +9,12 @@ exports.up = async function (knex) {
     await knex.schema.createTable(tableName.users, (table) => {
       table.increments().primary();
       table.text('firstname').notNullable();
-      table.text('lastname').notNullable();
+      table.text('lastname');
       table.text('username').notNullable().unique();
       table.text('password').notNullable();
+      table.boolean('is_deleted').notNullable().defaultTo(false);
       table.timestamp('created_at').defaultTo(knex.fn.now());
-      table.enu('role', ['admin', 'project_manager', 'engineer', 'team_leader']);
+      table.enu('role', ['admin', 'project_manager', 'engineer', 'team_leader']).defaultTo('engineer');
     });
   } catch (err) {
     logger.error('Unable to create users table', err);
@@ -24,10 +25,7 @@ exports.up = async function (knex) {
     table.increments().primary();
     table.text('title', MAX_TITlE_LENGTH).notNullable();
     table.text('description').notNullable();
-    table.integer('manager_id').unsigned().notNullable();
     table.timestamp('created_at').defaultTo(knex.fn.now());
-
-    table.foreign('manager_id').references('id').inTable(tableName.users).onDelete('cascade');
   });
 
   //    Create members table
@@ -36,6 +34,7 @@ exports.up = async function (knex) {
 
     table.integer('user_id').notNullable();
     table.integer('project_id').notNullable();
+    table.boolean('is_manager').notNullable().defaultTo(false);
 
     table.foreign('user_id').references('id').inTable(tableName.users).onDelete('cascade');
     table.foreign('project_id').references('id').inTable(tableName.projects).onDelete('cascade');
@@ -44,14 +43,11 @@ exports.up = async function (knex) {
   //    Create tasks table
   await knex.schema.createTable(tableName.tasks, (table) => {
     table.increments().primary();
-
-    table.integer('assignee_id').notNullable();
     table.integer('project_id').notNullable();
     table.text('title', MAX_TITlE_LENGTH).notNullable();
     table.text('description').notNullable();
     table.datetime('deadline').notNullable();
 
-    table.foreign('assignee_id').references('id').inTable(tableName.users).onDelete('cascade');
     table.foreign('project_id').references('id').inTable(tableName.projects).onDelete('cascade');
   });
 
@@ -74,7 +70,7 @@ exports.up = async function (knex) {
 
     table.integer('user_id').notNullable();
     table.integer('task_id').notNullable();
-
+    table.boolean('is_assigned').notNullable().defaultTo(false);
     table.foreign('task_id').references('id').inTable(tableName.tasks).onDelete('cascade');
     table.foreign('user_id').references('id').inTable(tableName.users).onDelete('cascade');
   });
