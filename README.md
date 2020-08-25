@@ -20,6 +20,11 @@
   - User can have multiple task and task can be tagged to multiple users => Many to Many
   - Task has multiple comments and comment belong to a task => One to Many
 
+## Routes
+
+[x] POST /auth/login
+[X] POST /auth/register | This route needs the role to be 'admin'
+
 ## Reminder
 
 - Update schema for members by adding is_manager field and for tags by adding is_assigned field

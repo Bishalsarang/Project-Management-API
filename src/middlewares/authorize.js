@@ -1,6 +1,6 @@
 const httpStatusCodes = require('http-status-codes');
 
-const { verifyToken } = require('../utils/auth.utils');
+const { verifyToken, isAuthorizedRole } = require('../utils/auth.utils');
 
 const isAdmin = async (req, res, next) => {
   const token =
@@ -10,8 +10,15 @@ const isAdmin = async (req, res, next) => {
     if (token) {
       const payload = await verifyToken(token);
 
-      if (!payload || payload.role !== 'admin') {
-        const err = new Error('Not authorized. Only admin is allowed to do this operation');
+      if (!payload) {
+        const err = new Error('Invalid Token');
+
+        err.statusCode = httpStatusCodes.UNAUTHORIZED;
+        throw err;
+      }
+
+      if (!isAuthorizedRole(payload.role, 'admin')) {
+        const err = new Error('Unauthorized Access');
 
         err.statusCode = httpStatusCodes.UNAUTHORIZED;
         throw err;

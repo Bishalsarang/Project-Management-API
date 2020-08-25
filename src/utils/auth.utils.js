@@ -51,9 +51,54 @@ const comparePassword = async (password, hashedPassword) => {
   }
 };
 
+/**
+ * Returns token from request header.
+ *
+ * @param {Object} req Request object.
+ * @returns {String} Token String.
+ */
+const getToken = (req) => {
+  if (!req) {
+    return null;
+  }
+
+  const token =
+    req.headers['auth-token'] || req.headers['authorization'] || req.headers['token'] || req.headers['x-access-token'];
+
+  if (!token) {
+    return null;
+  }
+
+  return token;
+};
+
+/**
+ * Get current user role from request object.
+ *
+ * @param {Object} req Request Object.
+ */
+const getCurrentUserRole = async (req) => {
+  const token = getToken(req);
+
+  if (!token) {
+    return null;
+  }
+
+  const { role } = await verifyToken(token);
+
+  return role;
+};
+
+const isAuthorizedRole = (currentSessionRole, expectedRole) => {
+  return currentSessionRole === expectedRole;
+};
+
 module.exports = {
+  getToken,
   verifyToken,
   comparePassword,
+  isAuthorizedRole,
+  getCurrentUserRole,
   generateAccessToken,
   generateHashedPassword
 };

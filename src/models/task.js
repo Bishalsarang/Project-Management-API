@@ -25,6 +25,7 @@ const Task = model.extend({
   getAllUsers(taskId) {
     return Task.getRelated('users', { id: taskId });
   },
+
   /**
    * Task belong to a single project.
    */

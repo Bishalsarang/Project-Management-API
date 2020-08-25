@@ -19,7 +19,7 @@ const Project = model.extend({
   /**
    * Get all the users associated with projectId.
    *
-   * @param projectId
+   * @param {Integer} projectId
    */
   getAllUsers(projectId) {
     return Project.getRelated('users', { id: projectId });

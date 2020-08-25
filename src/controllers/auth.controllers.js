@@ -6,11 +6,10 @@ const { generateHashedPassword, comparePassword, generateAccessToken } = require
 const User = require('../models/user');
 
 /**
- *a user
- * @param {Object} req.
+ * Register a user.
  *
+ * @param {Object} req
  * @param {Object} res
- * @param req
  * @param {Function} next
  */
 const register = async (req, res, next) => {
