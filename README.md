@@ -62,6 +62,7 @@
 - [x] Add relationships between table
 - [x] Complete user routes (CRUD)
 - [x] Complete project routes (CRUD)
+- [ ] While admin creates a project he/she add a project manager to the project i.e on update : members table and project table and only user with project_manager role can be assigned
 - [ ] List User by roles
 - [ ] Remove code duplication in CRUD
 - [ ] Sanitize and validate data before inserting into database
@@ -71,3 +72,16 @@
 - [ ] Add JSdoc
 - [ ] Build Frontend
 - [ ] Arrange imports
+
+## Requirements
+
+### Admin
+
+- [x] Admin Can perform all CRUD for Projects, Users, Tasks
+- [x] Can View all the Projects, Users, Tasks
+
+### Project Manager
+
+- [x] Cannot add new project, delete project
+- [x] Can View all the projects, even the ones s/he is not assigned to but cannot view the tasks of the projects they’re not assigned to
+- [x]

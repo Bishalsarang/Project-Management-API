@@ -2,6 +2,14 @@ const { createProjects, getProjects, updateProjects, deleteProjects } = require(
 
 const { SUCCESS_MESSAGE } = require('../constants');
 
+/**
+ * Creates a new project.
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ */
+
 const create = async (req, res, next) => {
   try {
     const result = await createProjects(req.body);
