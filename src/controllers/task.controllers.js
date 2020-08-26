@@ -1,9 +1,10 @@
 const { createTasks, getTasks, updateTasks, deleteTasks } = require('../services/task.services');
+
 const { SUCCESS_MESSAGE } = require('../constants');
 
 const create = async (req, res, next) => {
   try {
-    const result = await createTasks(req.body);
+    const result = await createTasks(req);
 
     if (result instanceof Error) {
       throw new Error(result);
@@ -16,7 +17,7 @@ const create = async (req, res, next) => {
 
 const readAll = async (req, res, next) => {
   try {
-    const result = await getTasks();
+    const result = await getTasks(req);
 
     if (result instanceof Error) {
       throw new Error(result);
@@ -29,7 +30,7 @@ const readAll = async (req, res, next) => {
 
 const readById = async (req, res, next) => {
   try {
-    const result = await getTasks({ id: req.params.id });
+    const result = await getTasks(req);
 
     if (result instanceof Error) {
       throw new Error(result);

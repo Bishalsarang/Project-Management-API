@@ -89,6 +89,18 @@ const getCurrentUserRole = async (req) => {
   return role;
 };
 
+const getCurrentUserId = async (req) => {
+  const token = getToken(req);
+
+  if (!token) {
+    return null;
+  }
+
+  const { id } = await verifyToken(token);
+
+  return id;
+};
+
 const isAuthorizedRole = (currentSessionRole, expectedRole) => {
   return currentSessionRole === expectedRole;
 };
@@ -98,6 +110,7 @@ module.exports = {
   verifyToken,
   comparePassword,
   isAuthorizedRole,
+  getCurrentUserId,
   getCurrentUserRole,
   generateAccessToken,
   generateHashedPassword

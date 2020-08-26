@@ -2,8 +2,9 @@ const httpStatusCodes = require('http-status-codes');
 
 const { createProjects, getProjects, updateProjects, deleteProjects } = require('../services/project.services');
 
-const { SUCCESS_MESSAGE } = require('../constants');
-const { verifyToken, getToken } = require('../utils/auth.utils');
+const { ROLE, SUCCESS_MESSAGE } = require('../constants');
+
+const { verifyToken, getToken, getCurrentUserId, getCurrentUserRole } = require('../utils/auth.utils');
 
 /**
  * Creates a new project.
@@ -56,16 +57,11 @@ const update = async (req, res, next) => {
   const id = req.params.id;
 
   try {
-    const token = getToken(req);
-    const payload = await verifyToken(token);
+    const currentUserId = await getCurrentUserId(req);
+    const role = await getCurrentUserRole(req);
 
-    if (!payload) {
-      throw new Error('Invalid Token');
-    }
-    const { id: currentUserId } = payload;
-
-    // Only allow updates the user is assigned
-    if (parseInt(id) !== currentUserId) {
+    // Only allow updates the user is assigned to
+    if (role !== ROLE.admin && parseInt(id) !== currentUserId) {
       const error = new Error('Unauthorized to update as the project is not assigned to you');
 
       error.statusCode = httpStatusCodes.UNAUTHORIZED;
