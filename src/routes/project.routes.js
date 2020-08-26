@@ -16,7 +16,9 @@ router
 router
   .route('/:id')
   .get(authorize.isAuthorized([ROLE.admin]), projectController.readById) // READ
-  .put(authorize.isAuthorized([ROLE.admin]), projectController.update) // UPDATE
+  //  Only admin and project manager can update teh project
+  // Admin has full access but PM can update only the projects he/she is assigned
+  .put(authorize.isAuthorized([ROLE.admin, ROLE.projectManager]), projectController.update) // UPDATE
   .delete(authorize.isAuthorized([ROLE.admin]), projectController.del) // DELETE
   .all(errorHandler.methodNotAllowed);
 

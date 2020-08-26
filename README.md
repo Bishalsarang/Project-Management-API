@@ -84,4 +84,5 @@
 
 - [x] Cannot add new project, delete project
 - [x] Can View all the projects, even the ones s/he is not assigned to but cannot view the tasks of the projects they’re not assigned to
-- [x]
+- [x] Can perform Updates for assigned Projects only
+- [ ]
