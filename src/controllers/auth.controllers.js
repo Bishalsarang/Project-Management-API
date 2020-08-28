@@ -4,6 +4,7 @@ const dbError = require('../utils/dbErrors.utils');
 const { generateHashedPassword, comparePassword, generateAccessToken } = require('../utils/auth.utils');
 
 const User = require('../models/user');
+const userSchema = require('../validators/user.validators');
 
 /**
  * Register a user.
@@ -38,6 +39,12 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    // eslint-disable-next-line no-unused-vars
+    const { data, error } = userSchema.validate({ username, password });
+
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
     const userData = await User.findOne({ username });
 
     const { password: hashedPassword, role, id } = userData;

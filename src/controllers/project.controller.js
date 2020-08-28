@@ -37,7 +37,7 @@ const create = async (req, res, next) => {
 
 const readAll = async (req, res, next) => {
   try {
-    const result = await getProjects();
+    const result = await getProjects({ userId: req.body.userId });
 
     if (result instanceof Error) {
       throw new Error(result);
@@ -49,7 +49,6 @@ const readAll = async (req, res, next) => {
 };
 
 const readById = async (req, res, next) => {
-  console.log('query', req.query);
   try {
     const result = await getProjects({ id: req.params.id });
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const model = require('./baseModel');
 
 const db = require('../db');
@@ -64,7 +65,7 @@ const User = model.extend({
     return this.hasMany('Tag');
   },
   /**
-   * Get all the tags including taskid based on userId.
+   * Get all the tags including task id based on userId.
    *
    * @param {Integer} userId
    */

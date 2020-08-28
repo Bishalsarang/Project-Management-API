@@ -1,6 +1,7 @@
 const { tableName } = require('../constants');
 const logger = require('../utils/logger');
 
+// eslint-disable-next-line camelcase
 const MAX_TITlE_LENGTH = 50;
 
 exports.up = async function (knex) {

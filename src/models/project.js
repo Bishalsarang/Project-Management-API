@@ -2,7 +2,6 @@ const model = require('./baseModel');
 
 const db = require('../db');
 const { tableName } = require('../constants');
-const User = require('./user');
 
 require('./user');
 require('./task');
@@ -49,7 +48,7 @@ const Project = model.extend({
     return this.hasMany('Member', 'project_id');
   },
   /**
-   * Get all members associted with projectId.
+   * Get all members associated with projectId.
    *
    * @param {Integer} projectId
    */

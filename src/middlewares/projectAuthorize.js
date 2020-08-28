@@ -1,10 +1,23 @@
 const httpStatusCodes = require('http-status-codes');
 const { ROLE } = require('../constants');
-const { getCurrentUserRole } = require('../utils/auth.utils');
+const { getCurrentUserRole, getCurrentUserId } = require('../utils/auth.utils');
 const createError = require('http-errors');
 
 // Everyone can read project but only view based on their role
-const read = (req, res, next) => {
+const read = async (req, res, next) => {
+  try {
+    const role = await getCurrentUserRole(req);
+
+    //  Can view all the projects
+    if (role === ROLE.admin || role === ROLE.projectManager) {
+      return next();
+    }
+    req.body.userId = await getCurrentUserId(req);
+
+    return next();
+  } catch (err) {
+    next(err);
+  }
   next();
 };
 

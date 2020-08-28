@@ -1,22 +1,34 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 const Member = require('../models/member');
 const Project = require('../models/project');
+const User = require('../models/user');
+
+const projectSchema = require('../validators/projects.validators');
 
 /**
  * Create a new project on database.
  *
  * @param {Object} data
  */
-const createProjects = async (data) => {
+const createProjects = async ({ title, description, user_id }) => {
   // This function creates new record on projects and members table
   // Because eery project should have a member (Project Manager)
   try {
-    const project = await Project.create({ title: data.title, description: data.description });
+    const { data, error } = projectSchema.validate({ title, description });
+
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
+    const project = await Project.create({ title, description });
 
     try {
       // If project created successfully then add manager
-      await Member.create({ user_id: data.user_id, project_id: project.id, is_manager: true });
+      // eslint-disable-next-line camelcase
+      await Member.create({ user_id: user_id, project_id: project.id, is_manager: true });
 
-      return { ...project, manager_user_id: data.user_id };
+      // eslint-disable-next-line camelcase
+      return { ...project, manager_user_id: user_id };
     } catch (err) {
       //  Rollback
       await deleteProjects(project.id);
@@ -28,20 +40,25 @@ const createProjects = async (data) => {
   }
 };
 
-const getProjects = async (filter) => {
+/**
+ * Admin and PM can view all the projects but other user can view only the projects they are associated.
+ */
+const getProjects = async ({ id, userId }) => {
   try {
-    const projects = await Project.findAll(filter);
+    if (userId) {
+      const projects = await User.forge().getAllProjects(userId);
 
-    const ids = projects.map((project) => project.id);
-    const managers = ids.map((id) => {
-      Project.forge()
-        .getManager(id)
-        .then((data) => (data[0] ? data[0].user_id : null));
-    });
+      return projects;
+    } else {
+      if (id) {
+        const projects = await Project.findAll({ id });
 
-    console.log(managers);
+        return projects;
+      }
+      const projects = await Project.findAll();
 
-    return projects;
+      return projects;
+    }
   } catch (err) {
     return err;
   }
@@ -49,12 +66,18 @@ const getProjects = async (filter) => {
 
 const updateProjects = async (filter, updateData) => {
   try {
+    const { data, error } = projectSchema.validate({ title: updateData.title, description: updateData.description });
+
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
     const projects = await Project.update(filter, {
       title: updateData.title,
       description: updateData.description
     });
 
     try {
+      // eslint-disable-next-line camelcase
       await Member.update({ project_id: projects.id }, { user_id: updateData.user_id });
     } catch (err) {
       return err;
@@ -98,7 +121,6 @@ const getAllUsers = async (projectId) => {
 };
 
 const addUser = async (req) => {
-  console.log(req.params, req.body);
   try {
     const user = await Member.create({ project_id: req.params.id, user_id: req.body.user_id });
 

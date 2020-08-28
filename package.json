@@ -19,12 +19,9 @@
       "eslint --ignore-path .gitignore . --fix"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
+
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "bcrypt": "^5.0.0",
     "bookshelf": "^1.2.0",
     "cors": "^2.8.5",

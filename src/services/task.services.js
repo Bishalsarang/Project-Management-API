@@ -1,8 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 const httpStatusCodes = require('http-status-codes');
 
 const Tag = require('../models/tag');
 const Task = require('../models/task');
 const User = require('../models/user');
+
+const taskSchema = require('../validators/tasks.validators');
 
 const { ROLE } = require('../constants');
 
@@ -33,11 +37,16 @@ const createTasks = async (req) => {
       const check = await isAssignedToUser(req);
 
       if (!check) {
-        const err = new Error("Unauthorized access. The Project does'nt belong to current user");
+        const err = new Error("Unauthorized access. The Project doesn't belong to current user");
 
         err.statusCode = httpStatusCodes.UNAUTHORIZED;
         throw err;
       }
+    }
+    const { data, error } = taskSchema.validate(req.body);
+
+    if (error) {
+      throw new Error(error.details[0].message);
     }
 
     const { user_id, ...rest } = req.body;
@@ -80,21 +89,15 @@ const updateTasks = async (req) => {
   // , req.body
   try {
     const taskId = req.params.id;
-    const updateData = req.body;
-    const filter = { id: taskId };
-    const currentUserId = await getCurrentUserId(req);
-    const currentUserRole = await getCurrentUserRole(req);
+    const { project_id, title, description, deadline, ...rest } = req.body;
+    const { data, error } = taskSchema.validate({ project_id, title, description, deadline });
 
-    //
-    //  PM can only update tasks belonging to his project
-    if (currentUserRole === ROLE.projectManager) {
-      //  getAllProjectsAssociated with PM
-      const projectList = await User.forge().getAllProjects(currentUserId);
-      // Get all tasks associated with project
-
-      const projectIds = projectList.map((project) => project.id);
+    if (error) {
+      throw new Error(error.details[0].message);
     }
-    const task = await Task.update(filter, updateData);
+    const filter = { id: taskId };
+
+    const task = await Task.update(filter, req.body);
 
     return task;
   } catch (err) {
