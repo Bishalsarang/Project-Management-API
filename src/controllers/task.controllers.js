@@ -1,4 +1,4 @@
-const { createTasks, getTasks, updateTasks, deleteTasks } = require('../services/task.services');
+const { createTasks, getTasks, updateTasks, deleteTasks, getTaggedUsers } = require('../services/task.services');
 
 const { SUCCESS_MESSAGE } = require('../constants');
 
@@ -67,4 +67,17 @@ const del = async (req, res, next) => {
   }
 };
 
-module.exports = { readAll, create, readById, update, del };
+const getUsers = async (req, res, next) => {
+  try {
+    const result = await getTaggedUsers(req.params.id);
+
+    if (result instanceof Error) {
+      throw new Error(result);
+    }
+    res.json({ success: true, message: SUCCESS_MESSAGE.write, data: result });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { readAll, create, readById, update, del, getUsers };

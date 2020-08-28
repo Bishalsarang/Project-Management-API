@@ -24,12 +24,4 @@ const Comment = model.extend({
   }
 });
 
-// Task.forge()
-//   .getProject(3)
-//   .then((data) => console.log(data));
-
-// Comment.forge()
-//   .getTask(1)
-//   .then((data) => console.log(data));
-
 module.exports = db.model('Comment', Comment);

@@ -12,4 +12,6 @@ router
   .delete(taskController.del) // DELETE
   .all(errorHandler.methodNotAllowed);
 
+router.route('/:id/users').get(taskController.getUsers);
+
 module.exports = router;

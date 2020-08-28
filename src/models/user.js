@@ -82,8 +82,4 @@ const User = model.extend({
   }
 });
 
-// User.forge()
-//   .getAllMembers(3)
-//   .then((data) => console.log(data));
-
 module.exports = db.model('User', User);

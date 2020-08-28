@@ -63,15 +63,4 @@ const Project = model.extend({
   }
 });
 
-// Project.forge()
-//   .getAllUsers(1)
-//   .then((data) => console.log(data));
-
-// Project.forge()
-//   .getManagerInfo(14)
-//   .then((data) => console.log(data));
-// Project.forge()
-//   .getAllTasks(2)
-//   .then((data) => console.log(data));
-
 module.exports = db.model('Project', Project);

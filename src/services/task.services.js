@@ -43,7 +43,8 @@ const createTasks = async (req) => {
         throw err;
       }
     }
-    const { data, error } = taskSchema.validate(req.body);
+    const { project_id, title, description, deadline } = req.body;
+    const { data, error } = taskSchema.validate({ project_id, title, description, deadline });
 
     if (error) {
       throw new Error(error.details[0].message);
@@ -115,4 +116,14 @@ const deleteTasks = async (userId) => {
   }
 };
 
-module.exports = { createTasks, getTasks, updateTasks, deleteTasks };
+const getTaggedUsers = async (id) => {
+  try {
+    const users = await Task.forge().getAllTags(id);
+
+    return users;
+  } catch (err) {
+    return err;
+  }
+};
+
+module.exports = { createTasks, getTaggedUsers, getTasks, updateTasks, deleteTasks };

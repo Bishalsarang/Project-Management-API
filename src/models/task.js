@@ -76,8 +76,4 @@ const Task = model.extend({
   }
 });
 
-// Task.forge()
-//   .getAllComments(2)
-//   .then((data) => console.log(data));
-
 module.exports = db.model('Task', Task);

@@ -37,12 +37,4 @@ const Member = model.extend({
   }
 });
 
-// Member.forge()
-//   .getUser(2)
-//   .then((data) => console.log(data));
-
-// Member.forge()
-//   .getProject(2)
-//   .then((data) => console.log(data));
-
 module.exports = db.model('Member', Member);

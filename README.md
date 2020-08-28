@@ -12,7 +12,7 @@
   `yarn migrate`
 
 - Seed the database with default user credentials using
-  The default credentials is admin admin
+  The default credentials can be set inside .env file
   `yarn seed`
 
 - Run the server
@@ -96,6 +96,8 @@
 - [x] Complete user routes (CRUD)
 
 - [x] Complete project routes (CRUD)
+
+- [x] Complete task routes (CRUD)
 
 - [x] While admin creates a project he/she add a project manager to the project i.e on update : members table and project table and only user with project_manager role can be assigned
 
