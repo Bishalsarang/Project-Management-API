@@ -7,6 +7,8 @@
 - Configure the environment variables as per your database
 
 - You can set the default credentials in the .env file which is the credentials of admin
+- Install the dependencies
+  `yarn`
 
 - Migrate the database with
   `yarn migrate`
@@ -14,6 +16,14 @@
 - Seed the database with default user credentials using
   The default credentials can be set inside .env file
   `yarn seed`
+
+- Run the server
+  `yarn start`
+
+- Clone client app from https://github.com/Bishalsarang/Project-Management-Client
+
+- Install the dependencies
+  `yarn`
 
 - Run the server
   `yarn start`

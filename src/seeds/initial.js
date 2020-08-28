@@ -21,6 +21,7 @@ exports.seed = async function (knex) {
     password: hashedPassword || 'admin',
     role: 'admin'
   };
+
   // Create default user credentials
-  const [createdUser] = await knex(tableName.users).insert(user).returning('*');
+  await knex(tableName.users).insert(user).returning('*');
 };
