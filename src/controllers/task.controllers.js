@@ -43,7 +43,7 @@ const readById = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const result = await updateTasks({ id: req.params.id }, req.body);
+    const result = await updateTasks(req);
 
     if (result instanceof Error) {
       throw new Error(result);

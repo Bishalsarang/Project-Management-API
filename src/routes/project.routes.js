@@ -22,4 +22,8 @@ router
   .delete(authorize.isAuthorized([ROLE.admin]), projectController.del) // DELETE
   .all(errorHandler.methodNotAllowed);
 
+// Get tasks associated with project ID
+router.route('/:id/tasks').get(projectController.getTasks);
+// Get all the users associated with project Id
+router.route('/:id/users').get(projectController.getUsers).post(projectController.addUsers);
 module.exports = router;

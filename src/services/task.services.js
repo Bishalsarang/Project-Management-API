@@ -2,11 +2,17 @@ const httpStatusCodes = require('http-status-codes');
 
 const Task = require('../models/task');
 const User = require('../models/user');
+const Project = require('../models/project');
 
 const { ROLE } = require('../constants');
 
 const { getCurrentUserId, getCurrentUserRole } = require('../utils/auth.utils');
 
+/**
+ * Check if the project is assigned to user by comparing projectId.
+ *
+ * @param {Object} req
+ */
 const isAssignedToUser = async (req) => {
   const projectId = parseInt(req.body.project_id);
   const currentUserId = await getCurrentUserId(req);
@@ -45,8 +51,6 @@ const createTasks = async (req) => {
 
 const getTasks = async (req) => {
   try {
-    let filter = {};
-
     const currentUserId = await getCurrentUserId(req);
     const currentUserRole = await getCurrentUserRole(req);
 
@@ -56,11 +60,12 @@ const getTasks = async (req) => {
 
       return tasks;
     }
+    let filter = {};
+
     //  Get by params id
     if (req.params.id) {
       filter = { id: req.params.id };
     }
-
     const tasks = await Task.findAll(filter);
 
     return tasks;
@@ -69,8 +74,24 @@ const getTasks = async (req) => {
   }
 };
 
-const updateTasks = async (filter, updateData) => {
+const updateTasks = async (req) => {
+  // , req.body
   try {
+    const taskId = req.params.id;
+    const updateData = req.body;
+    const filter = { id: taskId };
+    const currentUserId = await getCurrentUserId(req);
+    const currentUserRole = await getCurrentUserRole(req);
+
+    //
+    //  PM can only update tasks belonging to his project
+    if (currentUserRole === ROLE.projectManager) {
+      //  getAllProjectsAssociated with PM
+      const projectList = await User.forge().getAllProjects(currentUserId);
+      // Get all tasks associated with project
+
+      const projectIds = projectList.map((project) => project.id);
+    }
     const task = await Task.update(filter, updateData);
 
     return task;

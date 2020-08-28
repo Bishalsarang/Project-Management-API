@@ -2,6 +2,7 @@ const model = require('./baseModel');
 
 const db = require('../db');
 const { tableName } = require('../constants');
+const User = require('./user');
 
 require('./user');
 require('./task');
@@ -54,6 +55,12 @@ const Project = model.extend({
    */
   getAllMembers(projectId) {
     return Project.getRelated(tableName.members, { id: projectId });
+  },
+
+  getManager(projectId) {
+    return Project.forge()
+      .getAllMembers(projectId)
+      .then((data) => data.filter((member) => member.is_manager === true));
   }
 });
 
@@ -61,6 +68,9 @@ const Project = model.extend({
 //   .getAllUsers(1)
 //   .then((data) => console.log(data));
 
+// Project.forge()
+//   .getManagerInfo(14)
+//   .then((data) => console.log(data));
 // Project.forge()
 //   .getAllTasks(2)
 //   .then((data) => console.log(data));

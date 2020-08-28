@@ -48,7 +48,7 @@ const login = async (req, res, next) => {
     }
     const token = generateAccessToken({ id, username, role });
 
-    return res.status(httpStatus.OK).json({ success: true, message: 'Successfully Logged In', token });
+    return res.status(httpStatus.OK).json({ success: true, message: 'Successfully Logged In', token, username, role });
   } catch (err) {
     next(err);
   }
