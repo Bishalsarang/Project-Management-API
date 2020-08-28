@@ -1,0 +1,23 @@
+{
+   "sqltools.connections": [
+      {
+         "database": "project",
+         "driver": "PostgreSQL",
+         "group": "test",
+         "name": "test",
+         "password": "password",
+         "port": 5433,
+         "previewLimit": 50,
+         "server": "localhost",
+         "username": "admin"
+      }
+   ],
+   "cSpell.words": [
+      "Softdelete",
+      "datetime",
+      "firstname",
+      "knexfile",
+      "lastname",
+      "middlewares"
+   ]
+}
