@@ -13,14 +13,8 @@ const commentRoutes = require('./routes/comment.routes');
 
 router.use('/auth', authRoutes);
 router.use('/comments', isAuthenticated, commentRoutes);
-router.use('/users', isAuthenticated, authorize.isAuthorized([ROLE.admin]), userRoutes);
-router.use(
-  '/tasks',
-  isAuthenticated,
-  //   Task route can be accessed by anyone regardless of permission but the access level vary
-  authorize.isAuthorized([ROLE.admin, ROLE.projectManager, ROLE.teamLeader, ROLE.engineer]),
-  taskRoutes
-);
+router.use('/users', isAuthenticated, userRoutes);
+router.use('/tasks', isAuthenticated, taskRoutes);
 router.use('/projects', isAuthenticated, projectRoutes);
 
 module.exports = router;

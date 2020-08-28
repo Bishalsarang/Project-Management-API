@@ -100,7 +100,7 @@ const del = async (req, res, next) => {
   }
 };
 
-// Get tasks associated wih project
+// Get tasks associated with project
 const getTasks = async (req, res, next) => {
   try {
     const result = await getAllTasks(req.params.id);
@@ -134,6 +134,13 @@ const getUsers = async (req, res, next) => {
   }
 };
 
+/**
+ * Add User to current project.
+ *
+ * @param {Object } req
+ * @param {Object }  res
+ * @param {Function } next
+ */
 const addUsers = async (req, res, next) => {
   try {
     const result = await addUser(req);

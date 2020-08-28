@@ -1,8 +1,8 @@
 const httpStatusCodes = require('http-status-codes');
 
+const Tag = require('../models/tag');
 const Task = require('../models/task');
 const User = require('../models/user');
-const Project = require('../models/project');
 
 const { ROLE } = require('../constants');
 
@@ -40,8 +40,10 @@ const createTasks = async (req) => {
       }
     }
 
-    const data = req.body;
-    const task = await Task.create(data);
+    const { user_id, ...rest } = req.body;
+    const task = await Task.create(rest);
+
+    await Tag.create({ user_id, task_id: task.id, is_assigned: true });
 
     return task;
   } catch (err) {

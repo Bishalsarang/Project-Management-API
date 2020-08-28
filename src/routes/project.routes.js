@@ -1,25 +1,24 @@
 const router = require('express').Router();
 
-const { ROLE } = require('../constants');
-const authorize = require('../middlewares/authorize');
-const projectController = require('../controllers/project.controller');
 const errorHandler = require('../middlewares/errorHandler');
+const projectAuthorize = require('../middlewares/projectAuthorize');
+const projectController = require('../controllers/project.controller');
 
 router
   .route('/')
-  // Only Admin and Project Manager can view all the projects
-  .get(authorize.isAuthorized([ROLE.admin, ROLE.projectManager]), projectController.readAll)
+
+  .get(projectAuthorize.read, projectController.readAll)
   //   Only admin can create new project
-  .post(authorize.isAuthorized([ROLE.admin]), projectController.create)
+  .post(projectAuthorize.create, projectController.create)
   .all(errorHandler.methodNotAllowed);
 
 router
   .route('/:id')
-  .get(authorize.isAuthorized([ROLE.admin]), projectController.readById) // READ
+  .get(projectAuthorize.read, projectController.readById) // READ
   //  Only admin and project manager can update teh project
   // Admin has full access but PM can update only the projects he/she is assigned
-  .put(authorize.isAuthorized([ROLE.admin, ROLE.projectManager]), projectController.update) // UPDATE
-  .delete(authorize.isAuthorized([ROLE.admin]), projectController.del) // DELETE
+  .put(projectAuthorize.update, projectController.update) // UPDATE
+  .delete(projectAuthorize.del, projectController.del) // DELETE
   .all(errorHandler.methodNotAllowed);
 
 // Get tasks associated with project ID
